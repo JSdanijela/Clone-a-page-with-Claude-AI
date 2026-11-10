@@ -1,0 +1,31 @@
+{
+  "assets": {
+    "logo": "assets/img/digistore24-logo.svg",
+    "favicon": "assets/img/favicon.svg",
+    "heroPhoto": "assets/img/hero-photo.webp",
+    "heroAnimation": "assets/img/hero-animation.svg",
+    "trustBadges": "assets/img/trust-badges.webp",
+    "scopeIncludedPhoto": "assets/img/scope-included.webp",
+    "scopeExcludedPhoto": "assets/img/scope-excluded.webp",
+    "fitStrip": "assets/img/fit-strip.webp",
+    "testimonialMareikeAwe": "assets/img/testimonial-mareike-awe.webp",
+    "testimonialDulSeo": "assets/img/testimonial-dul-seo.webp",
+    "quoteMarks": "assets/img/quote-marks.svg",
+    "faqStrip": "assets/img/faq-strip.webp",
+    "ctaStrip": "assets/img/cta-strip.webp",
+    "ctaWordmark": "assets/img/cta-wordmark.svg"
+  },
+  "fonts": {
+    "helveticaNeueMedium": "assets/fonts/helvetica-neue-lt-pro-md.woff2",
+    "helveticaNeueBold": "assets/fonts/helvetica-neue-lt-pro-bd.woff2",
+    "roboto400": "assets/fonts/roboto-latin-400-normal.woff2",
+    "roboto700": "assets/fonts/roboto-latin-700-normal.woff2",
+    "fontAwesome": "assets/fonts/fontawesome-webfont.woff2"
+  },
+  "links": {
+    "booking": "https://digistore24.typeform.com/to/jg2QdVwY",
+    "privacy": "https://www.digibiz24.com/de/privacy",
+    "imprint": "https://www.digibiz24.com/de/legal-notice",
+    "terms": "https://www.digistore24.com/page/terms/de"
+  }
+}

@@ -1,0 +1,164 @@
+/* cc-faq: photo strip + "FAQ / Häufige Fragen" + five questions
+   ≤600px   strip 235px tall; heading, then questions; text inset 16px; questions flush left
+   601px    strip 640px tall; text inset 36px; questions and answers indented 20px
+   801px    desktop heading sizes; text inset 60px; more space below the list
+   992px    two columns: heading left, questions right (the heading's 20px top margin
+            makes the questions start 20px above it, as on the reference) */
+
+.cc-faq {
+  --cc-faq-strip-height: 235px;
+  --cc-faq-inset: var(--cc-gutter);
+  --cc-faq-title-size: 72px;
+  --cc-faq-sub-size: 21px;
+  --cc-faq-question-size: 21px;
+  --cc-faq-answer-size: 18px;
+  --cc-faq-text-indent: 0px;
+  --cc-faq-pad-end: var(--cc-space-xl);
+  --cc-faq-item-pad-end: 30px;
+  --cc-faq-answer-gap-start: 10px;
+  --cc-faq-answer-gap-end: 6px;
+  /* Open/close animation, as on the reference: height over 0.3s, ease-out cubic. */
+  --cc-faq-duration: 0.3s;
+  --cc-faq-easing: cubic-bezier(0.33, 1, 0.68, 1);
+  --cc-faq-font: "cc-roboto", Roboto, sans-serif;
+  --cc-faq-divider: #e6e9ec;
+  /* The reference's +/− sits high and slightly outside the question box:
+     its glyph is 3.5px above the first line's top and 3px past the text box's end. */
+  --cc-faq-icon-shift-block: -3.5px;
+  --cc-faq-icon-shift-inline: -3px;
+  --cc-color-bg: #fff;
+  --cc-color-text: #000;
+  --cc-color-focus: #000;
+
+  background: var(--cc-color-bg);
+  color: var(--cc-color-text);
+  font-family: var(--cc-font);
+  font-weight: var(--cc-font-weight);
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.cc-faq) .cc-faq__strip {
+  display: block;
+  inline-size: 100%;
+  block-size: var(--cc-faq-strip-height);
+  object-fit: cover;
+}
+
+:where(.cc-faq) .cc-faq__content {
+  display: grid;
+  align-items: start;
+  padding: calc(var(--cc-space-l) + var(--cc-space-s) / 2) var(--cc-faq-inset) var(--cc-faq-pad-end);
+}
+
+:where(.cc-faq) .cc-faq__title {
+  margin: var(--cc-space-s) 0 var(--cc-space-l);
+  font-size: var(--cc-faq-title-size);
+  font-weight: inherit;
+  line-height: 1;
+}
+
+:where(.cc-faq) .cc-faq__title-main,
+:where(.cc-faq) .cc-faq__title-sub {
+  display: block;
+}
+
+:where(.cc-faq) .cc-faq__title-sub {
+  font-size: var(--cc-faq-sub-size);
+}
+
+:where(.cc-faq) .cc-faq__item {
+  padding-block: var(--cc-space-s);
+  padding-inline-end: var(--cc-faq-item-pad-end);
+  border-block-end: 1px solid var(--cc-faq-divider);
+  font-family: var(--cc-faq-font);
+  line-height: 1.5;
+  interpolate-size: allow-keywords;
+}
+
+/* The answer's box grows from 0 to its full height when the item opens and shrinks back
+   when it closes; content-visibility stays "visible" until the closing transition ends. */
+:where(.cc-faq) .cc-faq__item::details-content {
+  block-size: 0;
+  overflow: clip;
+  transition:
+    block-size var(--cc-faq-duration) var(--cc-faq-easing),
+    content-visibility var(--cc-faq-duration) var(--cc-faq-easing) allow-discrete;
+}
+
+:where(.cc-faq) .cc-faq__item[open]::details-content {
+  block-size: auto;
+}
+
+:where(.cc-faq) .cc-faq__question {
+  position: relative;
+  display: block;
+  padding-inline: var(--cc-faq-text-indent) var(--cc-space-s);
+  font-size: var(--cc-faq-question-size);
+  font-weight: var(--cc-font-weight-bold);
+  cursor: pointer;
+}
+
+:where(.cc-faq) .cc-faq__question::-webkit-details-marker {
+  display: none;
+}
+
+:where(.cc-faq) .cc-faq__question::after {
+  content: "\f067" / "";
+  position: absolute;
+  inset-block-start: var(--cc-faq-icon-shift-block);
+  inset-inline-end: var(--cc-faq-icon-shift-inline);
+  font-family: var(--cc-font-icons);
+  font-size: var(--cc-faq-question-size);
+  font-weight: 400;
+  line-height: 1;
+}
+
+:where(.cc-faq) .cc-faq__item[open] > .cc-faq__question::after {
+  content: "\f068" / "";
+}
+
+:where(.cc-faq) .cc-faq__question:focus-visible {
+  outline: 2px solid var(--cc-color-focus);
+  outline-offset: 2px;
+}
+
+:where(.cc-faq) .cc-faq__answer {
+  /* Padding, not margin, so the gaps are part of the animated box (as on the reference). */
+  margin: 0;
+  padding-block: var(--cc-faq-answer-gap-start) var(--cc-faq-answer-gap-end);
+  padding-inline: var(--cc-faq-text-indent) var(--cc-space-s);
+  font-size: var(--cc-faq-answer-size);
+  font-weight: 400;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.cc-faq) .cc-faq__item::details-content {
+    transition: none;
+  }
+}
+
+@media (min-width: 601px) {
+  .cc-faq {
+    --cc-faq-strip-height: 640px;
+    --cc-faq-inset: calc(var(--cc-gutter) + var(--cc-space-s));
+    --cc-faq-text-indent: var(--cc-space-s);
+  }
+}
+
+@media (min-width: 801px) {
+  .cc-faq {
+    --cc-faq-inset: calc(var(--cc-space-m) + var(--cc-gutter) + var(--cc-space-s));
+    --cc-faq-title-size: 120px;
+    --cc-faq-sub-size: 30px;
+    /* The reference adds an empty 51px desktop-only spacer row below the list. */
+    --cc-faq-pad-end: calc(var(--cc-space-xl) + 51px);
+  }
+}
+
+@media (min-width: 992px) {
+  :where(.cc-faq) .cc-faq__content {
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--cc-space-l);
+  }
+}

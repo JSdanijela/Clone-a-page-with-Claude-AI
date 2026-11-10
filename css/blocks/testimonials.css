@@ -1,0 +1,116 @@
+/* cc-testimonials: heading + two quote cards
+   ≤800px    heading, then cards stacked full width; mobile type
+   801px     desktop type; still stacked (the reference's three columns overflow the page below 1001px)
+   1001px    three equal columns: heading, card, card; cards equal height */
+
+.cc-testimonials {
+  --cc-testimonials-inset: var(--cc-gutter);
+  --cc-testimonials-title-inset: 0px;
+  --cc-testimonials-pad-block: 50px;
+  --cc-testimonials-title-size: 36px;
+  --cc-testimonials-quote-size: 18px;
+  --cc-testimonials-name-size: 21px;
+  --cc-testimonials-role-size: 16px;
+  --cc-testimonials-card-pad: 30px;
+  --cc-testimonials-mark-overlap: 30px;
+
+  display: grid;
+  row-gap: var(--cc-space-l);
+  padding: var(--cc-testimonials-pad-block) var(--cc-testimonials-inset);
+  background: #fff;
+  color: #000;
+  font-family: var(--cc-font);
+  font-weight: var(--cc-font-weight);
+  line-height: 1.2;
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.cc-testimonials) .cc-testimonials__title {
+  margin: var(--cc-space-xs) 0 0;
+  padding-inline: var(--cc-testimonials-title-inset);
+  font-size: var(--cc-testimonials-title-size);
+  font-weight: inherit;
+  line-height: 1;
+}
+
+:where(.cc-testimonials) .cc-testimonials__card {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding-block-end: var(--cc-testimonials-card-pad);
+  background: #000;
+}
+
+:where(.cc-testimonials) .cc-testimonials__photo {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+/* The white quote-mark square overlaps the bottom of the photo. */
+:where(.cc-testimonials) .cc-testimonials__mark {
+  display: block;
+  margin-block-start: calc(-1 * var(--cc-testimonials-mark-overlap));
+  margin-inline-start: var(--cc-testimonials-card-pad);
+}
+
+:where(.cc-testimonials) .cc-testimonials__quote {
+  margin: var(--cc-space-s) 0 0;
+  padding-inline: var(--cc-testimonials-card-pad);
+  color: var(--cc-color-muted);
+  font-size: var(--cc-testimonials-quote-size);
+}
+
+:where(.cc-testimonials) .cc-testimonials__quote p {
+  margin: 0;
+}
+
+:where(.cc-testimonials) .cc-testimonials__author {
+  margin-block-start: var(--cc-space-s);
+  padding-inline: var(--cc-testimonials-card-pad);
+}
+
+:where(.cc-testimonials) .cc-testimonials__name,
+:where(.cc-testimonials) .cc-testimonials__role {
+  display: block;
+}
+
+:where(.cc-testimonials) .cc-testimonials__name {
+  color: var(--cc-color-text);
+  font-size: var(--cc-testimonials-name-size);
+  line-height: 1;
+}
+
+:where(.cc-testimonials) .cc-testimonials__role {
+  color: rgb(255 255 255 / 0.8);
+  font-size: var(--cc-testimonials-role-size);
+}
+
+@media (min-width: 601px) {
+  .cc-testimonials {
+    --cc-testimonials-title-inset: var(--cc-space-s);
+  }
+}
+
+@media (min-width: 801px) {
+  .cc-testimonials {
+    --cc-testimonials-inset: calc(var(--cc-space-m) + var(--cc-gutter));
+    --cc-testimonials-pad-block: 91px;
+    --cc-testimonials-title-size: 48px;
+    --cc-testimonials-quote-size: 21px;
+    --cc-testimonials-name-size: 30px;
+    --cc-testimonials-role-size: 18px;
+  }
+}
+
+@media (min-width: 1001px) {
+  .cc-testimonials {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: var(--cc-space-l);
+    align-items: start;
+  }
+
+  :where(.cc-testimonials) .cc-testimonials__card {
+    align-self: stretch;
+  }
+}

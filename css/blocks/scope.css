@@ -1,0 +1,190 @@
+/* cc-scope: "Was wir für dich einrichten" and "Was dieser Service nicht umfasst"
+   ≤800px   each part stacked: photo on top, text below
+   801px    each part side by side, 50/50, at least 700px tall, text vertically centred;
+            part 1 photo left, part 2 photo right
+   1001px   wider text inset */
+
+.cc-scope {
+  --cc-scope-title-size: 36px;
+  --cc-scope-text-size: 21px;
+  --cc-scope-note-size: 15px;
+  --cc-scope-icon-indent: 36px;
+  --cc-scope-item-gap: 21px;
+  --cc-scope-min-height: 700px;
+  --cc-scope-inset-start: 124px;
+  --cc-scope-inset-end: 120px;
+  /* Photo framing, copied from the reference (see docs/notes.md, cc-scope "Photo framing"):
+     its image server returns a centred crop as wide as the box rounded up to the next
+     100 device pixels, and the page fills the box with it from the left edge.
+     box = the photo's box width; step = 100 device pixels in CSS px. */
+  --cc-scope-photo-box: 100cqi;
+  --cc-scope-photo-step: 100px;
+  --cc-color-button-bg: #161515;
+  --cc-color-button-text: #fff;
+  --cc-color-focus: #000;
+
+  background: #fff;
+  color: #000;
+  font-family: var(--cc-font);
+  font-weight: var(--cc-font-weight);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.cc-scope) .cc-scope__part {
+  container-type: inline-size;
+  display: grid;
+  /* The photo is wider than its box (see below); this keeps the cut-off part from
+     making the page scroll sideways. */
+  overflow-x: clip;
+}
+
+/* Up to 800px the first title is smaller on the reference. */
+:where(.cc-scope) .cc-scope__part--included {
+  --cc-scope-title-size: 30px;
+}
+
+/* Fallback for browsers without round() or container units: a plain centred cover. */
+:where(.cc-scope) .cc-scope__image {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* The reference's framing: the photo covers a box as wide as the rounded-up crop, centred,
+   and only the left part (the real box width) is shown. Must stay before the 801px rules. */
+@supports (inline-size: round(down, 1cqi, 1px)) {
+  :where(.cc-scope) .cc-scope__image {
+    --cc-scope-photo-crop: calc(round(down, var(--cc-scope-photo-box), var(--cc-scope-photo-step)) + var(--cc-scope-photo-step));
+
+    inline-size: var(--cc-scope-photo-crop);
+    max-inline-size: none;
+    block-size: calc(var(--cc-scope-photo-box) / 2);
+    margin-inline-end: calc(var(--cc-scope-photo-box) - var(--cc-scope-photo-crop));
+    /* Top and bottom extend 1px past the photo: a clip edge on a fractional pixel is
+       anti-aliased, which let the white background show as a light line along the edge. */
+    clip-path: inset(-1px calc(var(--cc-scope-photo-crop) - var(--cc-scope-photo-box)) -1px 0);
+  }
+}
+
+:where(.cc-scope) .cc-scope__content {
+  padding: var(--cc-space-l) var(--cc-gutter);
+}
+
+:where(.cc-scope) .cc-scope__title {
+  margin: var(--cc-space-xs) 0 0;
+  font-size: var(--cc-scope-title-size);
+  font-weight: inherit;
+  line-height: 1;
+}
+
+:where(.cc-scope) .cc-scope__list {
+  margin: var(--cc-space-s) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--cc-scope-text-size);
+}
+
+:where(.cc-scope) .cc-scope__list li {
+  position: relative;
+  padding-inline-start: var(--cc-scope-icon-indent);
+}
+
+:where(.cc-scope) .cc-scope__list li + li {
+  margin-block-start: var(--cc-scope-item-gap);
+}
+
+/* FontAwesome check / times, as on the reference; empty alt text keeps them out of screen readers. */
+:where(.cc-scope) .cc-scope__list li::before {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  content: "\f00c" / "";
+  font-family: var(--cc-font-icons);
+  font-weight: normal;
+}
+
+:where(.cc-scope) .cc-scope__part--excluded li::before {
+  content: "\f00d" / "";
+}
+
+:where(.cc-scope) .cc-scope__list strong {
+  font-weight: var(--cc-font-weight-bold);
+}
+
+:where(.cc-scope) .cc-scope__cta {
+  margin-block-start: var(--cc-space-l);
+}
+
+/* The reference marks the price note as bold, but renders it at regular weight. */
+:where(.cc-scope) .cc-scope__note {
+  margin: var(--cc-space-l) 0 0;
+  font-size: var(--cc-scope-note-size);
+  line-height: 1.2;
+}
+
+:where(.cc-scope) .cc-scope__note strong {
+  font-weight: inherit;
+}
+
+/* The reference's image requests are in device pixels, so the rounding step shrinks on dense screens. */
+@media (min-resolution: 1.5dppx) {
+  .cc-scope {
+    --cc-scope-photo-step: calc(100px / 1.5);
+  }
+}
+
+@media (min-resolution: 2dppx) {
+  .cc-scope {
+    --cc-scope-photo-step: 50px;
+  }
+}
+
+@media (min-resolution: 3dppx) {
+  .cc-scope {
+    --cc-scope-photo-step: calc(100px / 3);
+  }
+}
+
+@media (min-width: 801px) {
+  .cc-scope {
+    --cc-scope-note-size: 14px;
+    --cc-scope-photo-box: 50cqi;
+  }
+
+  :where(.cc-scope) .cc-scope__part--included {
+    --cc-scope-title-size: 36px;
+  }
+
+  :where(.cc-scope) .cc-scope__part {
+    grid-template-columns: 1fr 1fr;
+    min-block-size: var(--cc-scope-min-height);
+  }
+
+  /* contain: size stops the photo's own height from stretching the row; it fills the row instead. */
+  :where(.cc-scope) .cc-scope__image {
+    block-size: 100%;
+    aspect-ratio: auto;
+    contain: size;
+  }
+
+  :where(.cc-scope) .cc-scope__part--excluded .cc-scope__image {
+    order: 1;
+  }
+
+  :where(.cc-scope) .cc-scope__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 var(--cc-space-xs);
+  }
+}
+
+@media (min-width: 1001px) {
+  :where(.cc-scope) .cc-scope__content {
+    padding-inline: var(--cc-scope-inset-start) var(--cc-scope-inset-end);
+  }
+}

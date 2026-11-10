@@ -1,0 +1,96 @@
+/* cc-fit: photo strip + "Wann ist der Komplett-Service perfekt für dich?", copy, CTA
+   ≤600px   strip 235px tall, content overlaps it by 40px; text inset 16px
+   601px    strip 640px tall, overlap 75px; text inset 36px
+   801px    desktop type; bigger gap before the copy; text inset 60px; button natural width
+   Everything is centred. */
+
+.cc-fit {
+  --cc-fit-strip-height: 235px;
+  --cc-fit-strip-overlap: 40px;
+  --cc-fit-inset: var(--cc-gutter);
+  --cc-fit-title-size: 72px;
+  --cc-fit-sub-size: 36px;
+  --cc-fit-copy-size: 21px;
+  --cc-fit-copy-max: 888px;
+  --cc-fit-copy-gap: 25px;
+  --cc-fit-pad-end: var(--cc-space-xl);
+  --cc-color-bg: #161515;
+
+  background: var(--cc-color-bg);
+  color: var(--cc-color-muted);
+  font-family: var(--cc-font);
+  font-weight: var(--cc-font-weight);
+  line-height: 1;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.cc-fit) .cc-fit__strip {
+  display: block;
+  inline-size: 100%;
+  block-size: var(--cc-fit-strip-height);
+  object-fit: cover;
+}
+
+/* The content moves up over the bottom of the strip. It has no background of its own,
+   so the photo stays visible and the heading partly overlaps it, as on the reference. */
+:where(.cc-fit) .cc-fit__content {
+  position: relative;
+  margin-block-start: calc(-1 * var(--cc-fit-strip-overlap));
+  padding: var(--cc-space-s) var(--cc-fit-inset) var(--cc-fit-pad-end);
+}
+
+:where(.cc-fit) .cc-fit__title {
+  margin: 0;
+  color: var(--cc-color-text);
+  font-size: var(--cc-fit-title-size);
+  font-weight: inherit;
+  line-height: 1;
+  overflow-wrap: break-word;
+}
+
+:where(.cc-fit) .cc-fit__title-main,
+:where(.cc-fit) .cc-fit__title-sub {
+  display: block;
+}
+
+:where(.cc-fit) .cc-fit__title-sub {
+  font-size: var(--cc-fit-sub-size);
+}
+
+:where(.cc-fit) .cc-fit__copy {
+  max-inline-size: var(--cc-fit-copy-max);
+  margin: var(--cc-fit-copy-gap) auto 0;
+  font-size: var(--cc-fit-copy-size);
+}
+
+/* The reference separates the two paragraphs with an empty line (<br><br>). */
+:where(.cc-fit) .cc-fit__copy + .cc-fit__copy {
+  margin-block-start: 1lh;
+}
+
+:where(.cc-fit) .cc-fit__cta {
+  margin-block-start: var(--cc-space-l);
+}
+
+@media (min-width: 601px) {
+  .cc-fit {
+    --cc-fit-strip-height: 640px;
+    --cc-fit-strip-overlap: 75px;
+    --cc-fit-inset: calc(var(--cc-gutter) + var(--cc-space-s));
+  }
+}
+
+@media (min-width: 801px) {
+  .cc-fit {
+    --cc-fit-inset: calc(var(--cc-space-m) + var(--cc-gutter) + var(--cc-space-s));
+    --cc-fit-title-size: 120px;
+    --cc-fit-sub-size: 50px;
+    --cc-fit-copy-size: 30px;
+    --cc-fit-copy-gap: 76px;
+  }
+
+  :where(.cc-fit) .cc-fit__cta {
+    margin-inline: auto;
+  }
+}

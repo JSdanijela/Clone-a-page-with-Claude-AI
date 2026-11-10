@@ -1,0 +1,82 @@
+/* cc-cta: photo strip + "Starte jetzt mit" / wordmark heading + CTA, centred
+   ≤600px   strip 235px tall, the content covers all of it; text inset 16px; button full width
+   601px    strip 640px tall, content covers its bottom 260px; text inset 36px
+   801px    desktop heading size; text inset 60px; button natural width */
+
+.cc-cta {
+  --cc-cta-strip-height: 235px;
+  /* How far the content moves up over the strip. The reference uses 260px at every width;
+     on phones that is more than the strip, so the rebuild stops at the strip's top edge
+     and adds the difference to the top padding instead. */
+  --cc-cta-overlap: var(--cc-cta-strip-height);
+  --cc-cta-pad-start: 27px;
+  --cc-cta-inset: var(--cc-gutter);
+  --cc-cta-title-size: 36px;
+  --cc-cta-wordmark-max: 884px;
+
+  background: var(--cc-color-bg);
+  color: var(--cc-color-text);
+  font-family: var(--cc-font);
+  font-weight: var(--cc-font-weight);
+  line-height: 1;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.cc-cta) .cc-cta__strip {
+  display: block;
+  inline-size: 100%;
+  block-size: var(--cc-cta-strip-height);
+  object-fit: cover;
+}
+
+/* Positioned so the text paints over the strip, as on the reference. */
+:where(.cc-cta) .cc-cta__content {
+  position: relative;
+  margin-block-start: calc(-1 * var(--cc-cta-overlap));
+  padding: var(--cc-cta-pad-start) var(--cc-cta-inset) var(--cc-space-s);
+}
+
+:where(.cc-cta) .cc-cta__title {
+  margin: 0;
+  font-size: var(--cc-cta-title-size);
+  font-weight: inherit;
+  line-height: 1;
+}
+
+:where(.cc-cta) .cc-cta__title-lead {
+  display: block;
+}
+
+:where(.cc-cta) .cc-cta__wordmark {
+  display: block;
+  inline-size: 100%;
+  max-inline-size: var(--cc-cta-wordmark-max);
+  block-size: auto;
+  margin: var(--cc-space-s) auto 0;
+}
+
+:where(.cc-cta) .cc-cta__button {
+  margin-block-start: var(--cc-space-l);
+}
+
+@media (min-width: 601px) {
+  .cc-cta {
+    --cc-cta-strip-height: 640px;
+    --cc-cta-overlap: 260px;
+    --cc-cta-pad-start: 52px;
+    --cc-cta-inset: calc(var(--cc-gutter) + var(--cc-space-s));
+  }
+}
+
+@media (min-width: 801px) {
+  .cc-cta {
+    --cc-cta-pad-start: 30px;
+    --cc-cta-inset: calc(var(--cc-space-m) + var(--cc-gutter) + var(--cc-space-s));
+    --cc-cta-title-size: 48px;
+  }
+
+  :where(.cc-cta) .cc-cta__button {
+    margin-inline: auto;
+  }
+}

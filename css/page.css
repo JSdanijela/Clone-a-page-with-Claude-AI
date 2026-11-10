@@ -1,0 +1,191 @@
+/* Page shell: body, stand-in header and footer. Not migrated to the CMS.
+   Layouts follow the reference: ≤600px phone, 601–800px stacked, ≥801px desktop. */
+
+:root {
+  --page-bg: #000;
+  --page-fg: #fff;
+  --page-muted: #b2b2b2;
+  --page-divider: rgb(255 255 255 / 0.2);
+  /* "cc-helvetica-neue" is declared in base.css, which this page always loads. */
+  --page-font: "cc-helvetica-neue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --page-gutter: 16px;
+  --page-inset: 24px;
+}
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--page-fg);
+  font-family: var(--page-font);
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.site-header a,
+.site-footer a {
+  transition: opacity 0.3s;
+}
+
+.site-header a:hover,
+.site-footer a:hover {
+  opacity: 0.8;
+}
+
+.site-header a:focus-visible,
+.site-footer a:focus-visible {
+  outline: 2px solid var(--page-fg);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header a,
+  .site-footer a {
+    transition: none;
+  }
+}
+
+/* Header */
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px var(--page-gutter);
+  border-block-end: 1px solid var(--page-divider);
+}
+
+/* Logo and button shrink together on narrow phones, as on the reference. */
+.site-header__logo {
+  display: block;
+  min-inline-size: 0;
+  block-size: auto;
+  margin-block-start: 10px;
+}
+
+/* On the reference the button's padding sits inside a wrapper column, so it counts when the
+   logo and button shrink. 1.2 ≈ (205px text + 40px padding) / 205px text reproduces that. */
+.site-header__cta {
+  flex-shrink: 1.2;
+  padding: 20px;
+  background: var(--page-fg);
+  color: var(--page-bg);
+  font-size: 16px;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Footer */
+
+.site-footer {
+  padding-block: 30px 10px;
+}
+
+.site-footer__inner {
+  display: grid;
+  justify-items: center;
+  padding-inline: var(--page-gutter);
+  border-block-start: 1px solid var(--page-divider);
+}
+
+.site-footer__copy {
+  margin: 30px 0 0;
+  color: var(--page-muted);
+  font-size: 12px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 15px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__links a {
+  display: block;
+  padding: 0 15px 15px;
+  color: var(--page-muted);
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration: none;
+}
+
+/* Stacked: logo above a wide button; footer copy left, links right below it. */
+@media (min-width: 601px) {
+  .site-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .site-header__logo {
+    align-self: flex-start;
+    margin-inline-start: var(--page-inset);
+  }
+
+  .site-header__cta {
+    margin-inline-end: var(--page-inset);
+    padding: 17px 16px 15px;
+  }
+
+  .site-footer__inner {
+    justify-items: start;
+    padding-inline: calc(var(--page-gutter) + 20px);
+  }
+
+  .site-footer__copy {
+    text-align: start;
+  }
+
+  .site-footer__nav {
+    justify-self: end;
+  }
+
+  .site-footer__links a {
+    padding: 15px;
+    font-size: 16px;
+    line-height: calc(20 / 14);
+  }
+}
+
+/* Desktop: two columns in both header and footer. */
+@media (min-width: 801px) {
+  .site-header {
+    flex-direction: row;
+    align-items: center;
+    padding-inline: calc(var(--page-gutter) + var(--page-inset));
+  }
+
+  .site-header__logo {
+    align-self: auto;
+    margin-inline-start: 0;
+  }
+
+  .site-header__cta {
+    margin-inline-end: 0;
+  }
+
+  .site-footer {
+    padding-inline: var(--page-inset);
+  }
+
+  .site-footer__inner {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+    align-items: start;
+  }
+
+  .site-footer__copy {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1001px) {
+  .site-header {
+    align-items: flex-start;
+  }
+}

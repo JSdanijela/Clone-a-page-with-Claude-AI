@@ -1,0 +1,129 @@
+/* Shared tokens and primitives for all cc- blocks.
+   Breakpoints follow the reference: 601px, 801px, 992px, 1551px. */
+
+/* Fonts: the files the reference page loads, served from assets/fonts.
+   Paths are relative to this stylesheet; they change when the blocks move into the CMS. */
+@font-face {
+  font-family: "cc-helvetica-neue";
+  src: url("../assets/fonts/helvetica-neue-lt-pro-md.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "cc-helvetica-neue";
+  src: url("../assets/fonts/helvetica-neue-lt-pro-bd.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "cc-roboto";
+  src: url("../assets/fonts/roboto-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "cc-roboto";
+  src: url("../assets/fonts/roboto-latin-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "cc-fontawesome";
+  src: url("../assets/fonts/fontawesome-webfont.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+:where(.cc-hero, .cc-scope, .cc-hero-mobile, .cc-fit, .cc-testimonials, .cc-faq, .cc-cta) {
+  --cc-color-bg: #000;
+  --cc-color-text: #fff;
+  --cc-color-muted: #b2b2b2;
+  --cc-color-button-bg: #fff;
+  --cc-color-button-text: #000;
+  --cc-color-focus: #fff;
+
+  --cc-font: "cc-helvetica-neue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --cc-font-icons: "cc-fontawesome";
+  --cc-font-weight: 500;
+  --cc-font-weight-bold: 700;
+
+  --cc-space-xs: 15px;
+  --cc-space-s: 20px;
+  --cc-space-m: 24px;
+  --cc-space-l: 40px;
+  --cc-space-xl: 80px;
+  --cc-gutter: 16px;
+
+  /* Room the button keeps free for its arrow: 20px inset + 19px icon + 11px gap. */
+  --cc-button-icon-space: 50px;
+}
+
+/* CTA button: a link with a trailing arrow icon. */
+
+:where(.cc-hero, .cc-scope, .cc-fit, .cc-cta) .cc-button {
+  --cc-button-pad-start: var(--cc-space-s);
+  --cc-button-pad-end: var(--cc-space-s);
+  --cc-button-icon-height: 14px;
+
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+  padding: var(--cc-button-pad-start) var(--cc-button-icon-space) var(--cc-button-pad-end) var(--cc-space-s);
+  background: var(--cc-color-button-bg);
+  color: var(--cc-color-button-text);
+  font-family: var(--cc-font);
+  font-size: 21px;
+  font-weight: var(--cc-font-weight);
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+
+:where(.cc-hero, .cc-scope, .cc-fit, .cc-cta) .cc-button:hover {
+  opacity: 0.8;
+}
+
+:where(.cc-hero, .cc-scope, .cc-fit, .cc-cta) .cc-button:focus-visible {
+  outline: 2px solid var(--cc-color-focus);
+  outline-offset: 2px;
+}
+
+/* Arrow is centred on the last line of text, as on the reference (1lh = the button's line height). */
+:where(.cc-hero, .cc-scope, .cc-fit, .cc-cta) .cc-button__icon {
+  position: absolute;
+  inset-block-end: calc(var(--cc-button-pad-end) + (1lh - var(--cc-button-icon-height)) / 2);
+  inset-inline-end: var(--cc-space-s);
+  inline-size: 19px;
+  block-size: var(--cc-button-icon-height);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.cc-hero, .cc-scope, .cc-fit, .cc-cta) .cc-button {
+    transition: none;
+  }
+}
+
+@media (min-width: 601px) {
+  :where(.cc-hero, .cc-scope, .cc-fit, .cc-cta) .cc-button {
+    --cc-button-pad-start: 23px;
+    --cc-button-pad-end: 21px;
+  }
+}
+
+@media (min-width: 801px) {
+  :where(.cc-hero, .cc-scope, .cc-fit, .cc-cta) .cc-button {
+    inline-size: fit-content;
+    max-inline-size: 100%;
+  }
+}
